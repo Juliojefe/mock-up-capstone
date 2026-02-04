@@ -1,0 +1,49 @@
+<%- include('partials/header', { title: title }) %>
+
+<div class="feed-container">
+    <h2>Community Feed</h2>
+    <% posts.forEach(post => { %>
+        <div class="post-card">
+            <div class="post-header">
+                <a href="/users/<%= post.author.id %>" class="author-link">
+                    <img src="<%= post.author.profileImage %>" alt="<%= post.author.username %>" class="profile-pic-small">
+                    <strong><%= post.author.username %></strong>
+                    <% if (post.author.verifiedWrench) { %>
+                        <span class="verified-wrench-icon" title="Verified Mechanic">🔧</span>
+                    <% } %>
+                </a>
+            </div>
+            <div class="post-content">
+                <p><%= post.content %></p>
+                <% if (post.images && post.images.length > 0) { %>
+                    <div class="post-images">
+                        <% post.images.forEach(img => { %>
+                            <img src="<%= img %>" alt="Post image" class="post-image">
+                        <% }) %>
+                    </div>
+                <% } %>
+            </div>
+            <div class="post-footer">
+                <small class="timestamp"><%= new Date(post.createdAt).toLocaleString() %></small>
+            </div>
+            <div class="comments-section">
+                <h4>Comments</h4>
+                <% if (post.comments && post.comments.length > 0) { %>
+                    <% post.comments.forEach(comment => { %>
+                        <div class="comment">
+                           <a href="/users/<%= comment.author.id %>" class="author-link">
+                                <img src="<%= comment.author.profileImage %>" alt="<%= comment.author.username %>" class="profile-pic-tiny">
+                                <strong><%= comment.author.username %>:</strong>
+                           </a>
+                           <span><%= comment.content %></span>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <p class="no-comments">No comments yet.</p>
+                <% } %>
+            </div>
+        </div>
+    <% }) %>
+</div>
+
+<%- include('partials/footer') %>

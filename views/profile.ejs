@@ -1,0 +1,86 @@
+<%- include('partials/header', { title: title }) %>
+
+<div class="profile-container">
+    <div class="profile-header-card">
+        <img src="<%= user.profileImage %>" alt="<%= user.username %>" class="profile-pic-large">
+        <div class="profile-info">
+            <h1>
+                <%= user.username %>
+                <% if (user.verifiedWrench) { %>
+                    <span class="verified-wrench-icon-large" title="Verified Mechanic">🔧</span>
+                <% } %>
+            </h1>
+            <% if (user.isMechanic && user.location) { %>
+                <p class="location"><strong>Location:</strong> <%= user.location %></p>
+            <% } %>
+            <p class="bio"><%= user.bio %></p>
+        </div>
+    </div>
+
+    <% if (user.isMechanic) { %>
+        <!-- Mechanic-Specific Sections -->
+        <div class="mechanic-sections">
+            
+            <!-- Fake Work Gallery -->
+            <div class="profile-section">
+                <h2>Fake Work Gallery</h2>
+                <p class="section-subtitle">A showcase of past projects.</p>
+                <div class="gallery">
+                    <!-- Hardcoded mock gallery images -->
+                    <img src="/images/work1.jpg" alt="Work example 1">
+                    <img src="/images/work2.jpg" alt="Work example 2">
+                    <img src="/images/work3.jpg" alt="Work example 3">
+                </div>
+            </div>
+
+            <!-- Fake Reviews -->
+            <div class="profile-section">
+                <h2>Customer Reviews</h2>
+                 <% if (reviews && reviews.length > 0) { %>
+                    <% reviews.forEach(review => { %>
+                        <div class="review-card">
+                            <div class="rating">
+                                <% for(let i = 0; i < review.rating; i++) { %>⭐<% } %><% for(let i = review.rating; i < 5; i++) { %>☆<% } %>
+                            </div>
+                            <p class="review-comment">"<%= review.comment %>"</p>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <p>No reviews yet.</p>
+                <% } %>
+            </div>
+
+            <!-- Mock Calendar -->
+            <div class="profile-section">
+                <h2>Book an Appointment (Mock UI)</h2>
+                <div class="calendar-mock">
+                    <div class="calendar-header">February 2026</div>
+                    <div class="calendar-grid">
+                        <div class="day-name">Sun</div><div class="day-name">Mon</div><div class="day-name">Tue</div><div class="day-name">Wed</div><div class="day-name">Thu</div><div class="day-name">Fri</div><div class="day-name">Sat</div>
+                        <!-- Dates are for demo purposes and not interactive -->
+                        <div class="day other-month">25</div><div class="day other-month">26</div><div class="day other-month">27</div><div class="day other-month">28</div><div class="day other-month">29</div><div class="day other-month">30</div><div class="day other-month">31</div>
+                        <div class="day">1</div><div class="day">2</div><div class="day">3</div><div class="day available">4</div><div class="day">5</div><div class="day available">6</div><div class="day">7</div>
+                        <div class="day">8</div><div class="day booked">9</div><div class="day available">10</div><div class="day available">11</div><div class="day booked">12</div><div class="day">13</div><div class="day">14</div>
+                        <div class="day">15</div><div class="day">16</div><div class="day">17</div><div class="day available">18</div><div class="day">19</div><div class="day available">20</div><div class="day">21</div>
+                        <div class="day">22</div><div class="day booked">23</div><div class="day">24</div><div class="day">25</div><div class="day available">26</div><div class="day">27</div><div class="day">28</div>
+                    </div>
+                     <div class="calendar-legend">
+                        <span class="legend-item"><span class="legend-color available"></span> Available</span>
+                        <span class="legend-item"><span class="legend-color booked"></span> Booked</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    <% } else { %>
+        <!-- Regular User Section -->
+        <div class="profile-section">
+            <h2>User Activity</h2>
+            <p>This user's posts and comments can be found throughout the feed.</p>
+            <!-- In a real app, you might show a feed of only this user's posts here -->
+        </div>
+    <% } %>
+
+</div>
+
+<%- include('partials/footer') %>
